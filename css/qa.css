@@ -1,0 +1,22 @@
+.contact{
+    font-weight: bold;
+}
+.grey{
+    color:gray;
+}
+ p{
+     color:grey;
+ }
+ a{
+     color:grey;
+ }
+ a:hover{
+     color:#28a745;
+ }
+ .email{
+     margin-top: 50px;
+     font-weight: bold;
+ }
+ .facebook{
+     margin:70px;
+ }

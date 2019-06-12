@@ -1,0 +1,15 @@
+#head {
+    background: url(/images/aboutUs_hero.png);
+}
+
+#aboutUs {
+    z-index: 1;
+    position: absolute;
+    font-size: 64px;
+    margin-left: 450px;
+    margin-top: 100px;
+    color: white;
+}
+p,img{
+    opacity:0;
+}

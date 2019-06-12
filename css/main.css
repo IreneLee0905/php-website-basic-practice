@@ -1,0 +1,60 @@
+.themeColor {
+    background: #FFFFFF;
+}
+.word {
+    color: #FFFFFF;
+    font-size:100px;
+    position: absolute;
+    left: 300px;
+    top: 490px;
+}
+.topMargin {
+    margin-top: 50px;
+}
+#block{
+    background: rgba(35, 32, 76, 0.92);
+    position: absolute;
+    left: 900px;
+    top: 630px;
+
+}
+#block h1 {
+    color: #FFFFFF;
+    font-size: 100px;
+    padding: 10px;
+}
+#planet{
+    margin-top:-15px;
+    font-size: 64px;
+    color: #2a0bde;
+}
+#title{
+    line-height: 30px;
+    font-size: 20px;
+    color: #FFFFFF;
+    position: absolute;
+    top: 800px;
+    left: 870px;
+
+}
+
+.footer {
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    background-color: rgba(0, 0, 0, 0.98);
+    color: #bbbbbb;
+    text-align: center;
+    ;
+}
+
+
+.card:hover {
+    width: 250px;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    cursor: pointer;
+}
+body, html {
+    height: 100%;
+}

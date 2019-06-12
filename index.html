@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+    <script src="https://unpkg.com/ionicons@4.4.2/dist/ionicons.js"></script>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
+          integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+    <!--jquery-->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+    <!--popper-->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"
+            integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49"
+            crossorigin="anonymous"></script>
+    <!--bootstrap-->
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"
+            integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy"
+            crossorigin="anonymous"></script>
+    <!--animation css-->
+    <link rel="stylesheet"
+          href="https://cdn.jsdelivr.net/npm/animate.css@3.5.2/animate.min.css">
+    <link rel="stylesheet" href="css/main.css">
+    <title>Final Assessment</title>
+    <script>
+      $(function () {
+        $("#hello").animate({
+          left: '660px',
+          opacity: '1'
+        }, 2000);
+        $("#block").animate({
+          left: '840px',
+          opacity: '1'
+        }, 2000);
+        $("#title").animate({
+          opacity: '1'
+        }, 3000);
+      })
+
+    </script>
+    <style>
+        body {
+            background: url("./images/background.jpg");
+
+        }
+    </style>
+</head>
+<body>
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <a class="navbar-brand" href="#">
+        <img src="./images/rocket-icon-vector.png" width="50" height="50" alt="">
+    </a>
+    <ul class="navbar-nav mr-auto">
+        <li class="nav-item">
+            <a class="nav-link active" href="#">Home <span class="sr-only">(current)</span></a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="#">Features</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="pages/pricing.html">Pricing</a>
+        </li>
+        <li class="nav-item ">
+            <a class="nav-link" href="pages/aboutus.html">AboutUs</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="pages/qa.html">Q&A</a>
+        </li>
+    </ul>
+    <a class="btn btn-outline-info" href="pages/register.html">Register Now</a>
+</nav>
+<div class="container">
+
+    <h1 class="animated infinite bounce delay-2s"></h1>
+    <div id="hello" class="word col-sm-5">HELLO</div>
+    <div id="block">
+        <h1>ROCKET</h1>
+    </div>
+    <div id="title" style="opacity:0;">
+        <!--<ion-icon id="planet" name="planet"></ion-icon>-->
+        <a class="align-middle" style="text-decoration:inherit;color: #FFFFFF" href="./pages/register.html">Say
+            hello to the future ></a>
+    </div>
+
+    <footer class="footer">
+        Copyright © 2018 IreneLee Technology Crop. All rights reserved
+    </footer>
+</div>
+
+</body>
+
+</html>
