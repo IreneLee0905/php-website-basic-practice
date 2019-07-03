@@ -28,7 +28,7 @@ include("include/header.php");
             }
 
             if (empty($errors)) {
-                $query = "select * from accounts where email = '$account' and password = 'SHA($oldPassword) '";
+                $query = "select * from accounts where email = '$account' and password = SHA('$oldPassword') ";
                 $result = mysqli_query($dbc, $query);
                 $num = mysqli_num_rows($result);
 
@@ -37,7 +37,9 @@ include("include/header.php");
                     echo '<div class="alert alert-danger" role="alert">the old password is incorrect.</div>';
                 } else {
 
-                    $updateQuery = "update accounts set password = 'SHA($newPassword)' where email = '$account'";
+                    $updateQuery = "update accounts set password = SHA('$newPassword') where email = '$account'";
+                    $result = mysqli_query($dbc, $updateQuery);
+                    echo '<div class="alert alert-success" role="alert"> change password successfully</div>';
                 }
             } else {
 

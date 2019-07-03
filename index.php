@@ -55,7 +55,7 @@ session_start();
             </li>
             <?php
             if (isset($_SESSION['userName']) && isset($_COOKIE['userName'])) {
-                echo ' <li class="nav-item"><a class="nav-link" href="editProduct.php">Edit</a></li>';
+                echo ' <li class="nav-item"><a class="nav-link" href="editProduct.php">NewProduct</a></li>';
             }
 
             ?>
@@ -127,9 +127,14 @@ session_start();
 
     </div>
     <div id="title">
-        <!--<ion-icon id="planet" name="planet"></ion-icon>-->
-        <a class="align-middle" style="text-decoration:inherit;color: #FFFFFF" href="register.php">Say
-            hello to the future ></a>
+        <?php
+        if (!isset($_SESSION['userName']) || !isset($_COOKIE['userName'])){
+            echo '<a class="align-middle" style="text-decoration:inherit;color: #FFFFFF" href="register.php">Say hello to the future ></a>';
+        }else{
+            echo '<a class="align-middle" style="text-decoration:inherit;color: #FFFFFF" href="register.php">Search the product you like ></a>';
+        }
+        ?>
+
     </div>
     <?php
     include("include/footer.php");

@@ -1,10 +1,7 @@
 <?php
 session_start();
 include("include/mysqli_connect.php");
-include("include/header.php");
 ?>
-
-
 <?php
 if (isset($_GET['productId'])) {
     $productId = $_GET['productId'];
@@ -13,9 +10,9 @@ if (isset($_GET['productId'])) {
     $row = mysqli_fetch_array($result);
 }
 ?>
-
 <?php
 if (isset($_POST['submit'])) {
+    $id = mysqli_real_escape_string($dbc, $_POST["id"]);
     $name = mysqli_real_escape_string($dbc, $_POST["name"]);
     $author = mysqli_real_escape_string($dbc, $_POST["author"]);
     $description = mysqli_real_escape_string($dbc, $_POST['description']);
@@ -23,75 +20,112 @@ if (isset($_POST['submit'])) {
     $quantity = mysqli_real_escape_string($dbc, $_POST['quantity']);
     $review = mysqli_real_escape_string($dbc, $_POST['review']);
 
-    $errors = "";
-
-    $target_dir = "images/books/";
+    //old image file name
+    $image = mysqli_real_escape_string($dbc, $_POST['image']);
+    // a file updating the image
     $file_name = basename($_FILES["productImage"]["name"]);
-    $target_file = $target_dir . $file_name;
+
+
+    //select product by id for show the detail in the page even if there are some error..
+    $productId = $_POST['id'];
+    $query = "select * from products where id = '$productId'";
+    $result = mysqli_query($dbc, $query);
+    $row = mysqli_fetch_array($result);
 
     $errors = "";
-    $imageFileType = pathinfo($target_file, PATHINFO_EXTENSION);
+
+    //if there is a new file then need to validate the file information
+    if (!empty($file_name)) {
+        $target_dir = "images/books/";
+        $target_file = $target_dir . $file_name;
+
+        $errors = "";
+        $imageFileType = pathinfo($target_file, PATHINFO_EXTENSION);
+
+        $image = $file_name;
+
+        $check = getimagesize($_FILES["productImage"]["tmp_name"]);
+        if ($check == false) {
+
+            $errors = "Sorry, this is not an image file";
+        }
 
 
-    $check = getimagesize($_FILES["productImage"]["tmp_name"]);
-    if ($check == false) {
+        if (file_exists($target_file)) {
+            $errors = $errors . "<br/>Sorry, file already exists.";
 
-        $errors = "Sorry, this is not an image file";
+        }
+
+        if ($_FILES["productImage"]["size"] > 50000000) {
+            $errors = $errors . "<br/>Sorry, your file is too large.";
+
+        }
+
+        if ($imageFileType != "jpg" && $imageFileType != "JPG" && $imageFileType != "png" && $imageFileType != "jpeg"
+            && $imageFileType != "gif") {
+            $errors = $errors . "<br/>Sorry, only JPG, JPEG, PNG & GIF files are allowed.";
+        }
+
+        if (empty($file_name)) {
+            $errors = $errors . "please insert a file name";
+        }
     }
 
-
-    if (file_exists($target_file)) {
-        $errors = $errors . "<br/>Sorry, file already exists.";
-
-    }
-
-    if ($_FILES["productImage"]["size"] > 50000000) {
-        $errors = $errors . "<br/>Sorry, your file is too large.";
-
-    }
-
-    if ($imageFileType != "jpg" && $imageFileType != "JPG" && $imageFileType != "png" && $imageFileType != "jpeg"
-        && $imageFileType != "gif") {
-        $errors = $errors . "<br/>Sorry, only JPG, JPEG, PNG & GIF files are allowed.";
-    }
-
-    if (empty($name)) {
-        $errors = $errors . "please insert a file name";
-    }
 
     if ($errors != "") {
         echo $errors;
 
     } else {
-        if (move_uploaded_file($_FILES["productImage"]["tmp_name"], $target_file)) {
-            $query = "insert into products (name, author, description, price, quantity, review,image) VALUES ('$name','$author','$description',$price,$quantity,'$review','$file_name')";
+
+        if (empty($file_name)) {
+            $query = "update products set name = '$name',author = '$author', description = '$description', price = $price, quantity = $quantity, review = '$review'  where id = '$id'";
             $result = mysqli_query($dbc, $query);
             if (!$result) {
                 echo("Something occur when save data in Database ,Error code: " . mysqli_errno($dbc) . mysqli_error($dbc));
             } else {
                 header("Location:products.php");
             }
+
+            // if there is a new image file then upload file before we insert data to db
         } else {
-            echo "<br/>Sorry, there was an error uploading your file.";
+
+
+            if (move_uploaded_file($_FILES["productImage"]["tmp_name"], $target_file)) {
+//                delete old image file
+                unlink(trim(dirname(__FILE__) ."/images/books/".$_POST['image'])) or die("Couldn't delete file");
+
+                $query = "update products set name = '$name',author = '$author', description = '$description', price = $price, quantity = $quantity, review = '$review', image = '$image'  where id = '$id'";
+                $result = mysqli_query($dbc, $query);
+                if (!$result) {
+                    echo("Something occur when save data in Database ,Error code: " . mysqli_errno($dbc) . mysqli_error($dbc));
+                } else {
+                    header("Location:productDetails.php?id=$id");
+                }
+            } else {
+                echo "<br/>Sorry, there was an error uploading your file.";
+            }
         }
+
     }
 
 
 }
 ?>
+<?php include("include/header.php"); ?>
 <div class="container">
     <br/><br/>
     <div class="row">
         <div class="col-sm-5">
-            <img   width="440px" src="./images/books/<?php echo $row['image']?>">
-            
+            <img width="440px" src="./images/books/<?php echo $row['image'] ?>">
+
         </div>
         <div class="col-sm-7 mx-auto ">
-            <legend>Add New Product</legend>
+            <legend>Update Product</legend>
             <br/>
-            <form method="post" action="editProduct.php" enctype="multipart/form-data">
+            <form method="post" action="updateProduct.php" enctype="multipart/form-data">
                 <div class="form-group row">
                     <label for="staticEmail" class="col-sm-2 col-form-label"> Name</label>
+                    <input type="hidden" class="form-control" name="id" value="<?php echo $row['id'] ?>">
                     <div class="col-sm-4">
                         <input type="text" class="form-control" id="name" name="name"
                                value="<?php echo $row['name'] ?>">
@@ -120,7 +154,7 @@ if (isset($_POST['submit'])) {
 
                     <label class="col-sm-2 col-form-label">Picture</label>
                     <div class="col-sm-4">
-                        <input type="text" readonly class="form-control-plaintext" id="showImgName"
+                        <input type="text" readonly class="form-control-plaintext" id="showImgName" name="image"
                                value="<?php echo $row['image'] ?> ">
                     </div>
                 </div>
@@ -150,7 +184,6 @@ if (isset($_POST['submit'])) {
         </div>
     </div>
 </div>
-
 
 
 <?php

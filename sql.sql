@@ -31,7 +31,4 @@ CREATE TABLE products
 
 );
 
-insert into products (name,description,image,price,quantity) values ('PHP Learning',);
 
-# GRANT SELECT ON db2.invoice TO 'jeffrey'@'localhost';
-# ALTER USER 'jeffrey'@'localhost' WITH MAX_QUERIES_PER_HOUR 90;

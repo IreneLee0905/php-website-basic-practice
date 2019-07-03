@@ -50,7 +50,7 @@
             </li>
             <?php
             if (isset($_SESSION['userName']) && isset($_COOKIE['userName'])){
-                echo ' <li class="nav-item"><a class="nav-link" href="editProduct.php">Edit</a></li>';
+                echo ' <li class="nav-item"><a class="nav-link" href="editProduct.php">NewProduct</a></li>';
             }
 
             ?>
